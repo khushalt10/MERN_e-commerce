@@ -14,7 +14,7 @@ function ProdiuctScreen({ match }) {
         }        
 
         fetchProduct()
-    },[])
+    },[match])
 
     return (
         <>
