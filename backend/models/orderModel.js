@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 
 const orderSchema = mongoose.Schema({
     user: {
@@ -25,7 +25,7 @@ const orderSchema = mongoose.Schema({
                 required: true
             },
             product: {
-                type: mongo.Schema.Types.ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 required: true,
                 ref: 'Product'
             },
@@ -103,6 +103,6 @@ const orderSchema = mongoose.Schema({
     timestamp: true
 })
 
-const Order = mongoose.Model("Order", orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 export default Order;
