@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap'
 import HomeScreen from './screens/HomeScreen';
 import ProdiuctScreen from './screens/ProdiuctScreen';
 import CartScreen from './screens/CartScreen';
+import './App.css'
 
 function App() {
   return (
