@@ -16,7 +16,7 @@ app.use(express.json())
 connectDB()
 
 app.get('/', (req,res) => {
-    res.send("Hello Wolrd")
+    res.send("Hello World")
 })
 
 app.use('/api/products', productRoutes)
