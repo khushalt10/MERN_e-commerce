@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
-import { register } from '../actions/userActions'
+
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { getUserDetails } from '../actions/userActions'
 
-function RegisterScreen({location}) {
+function ProfileScreen({location}) {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -17,18 +17,24 @@ function RegisterScreen({location}) {
 
     const dispatch = useDispatch()
 
-    const userRegister = useSelector(state => state.userRegister)
-    const { loading, userInfo, error} = userRegister
+    const userDetails = useSelector(state => state.userDetails)
+    const { loading, user, error} = userDetails
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo} = userLogin
 
     useEffect(() => {
-        if(userInfo) {  
-            history.push("/")
-            console.log(userInfo)
-
+        if(!userInfo) {  
+            history.push("/login")
+        }else {
+            if (!user.name) {
+                dispatch(getUserDetails('profile'))
+            } else {
+                setName(user.name)
+                setEmail(user.email)
+            }
         }
-    }, [history, userInfo, redirect])
+    }, [history, userInfo, dispatch, user])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -36,15 +42,13 @@ function RegisterScreen({location}) {
             setMessage('Password do not match')
         }
         setMessage(null)
-        dispatch(register(name, email, password))
-        // if (userInfo) {
-        //     history.push('/')
-        // }
+       
     }
 
     return (
-        <FormContainer>
-            <h1>Sign Up</h1>
+    <Row>
+        <Col md={3}>
+        <h2>User Profile</h2>
             {message && <Message variant="danger">{message}</Message>}
             {error && <Message variant="danger">{error}</Message>}
             {loading && <Loader />}
@@ -74,17 +78,15 @@ function RegisterScreen({location}) {
                 </Form.Group>
 
                 <Button type="submit" variant="info">
-                    Register
+                    Update
                 </Button>
             </form>
-
-            <Row className="py-3">
-                <Col>
-                    Have an Account? <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
-                </Col>
-            </Row>
-        </FormContainer>
+        </Col>
+        <Col md={9}>
+            <h2>My Orders</h2>
+        </Col>
+    </Row>
     )
 }
 
-export default RegisterScreen
+export default ProfileScreen
