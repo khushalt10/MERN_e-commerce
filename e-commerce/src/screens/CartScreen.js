@@ -15,6 +15,10 @@ function CartScreen({ match, location, history }) {
     const { cartItems } = cart
     console.log(cartItems)
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo} = userLogin
+
+
     useEffect(() => {
         if (productId){
             dispatch(addToCart(productId, qty))
@@ -26,7 +30,11 @@ function CartScreen({ match, location, history }) {
     }
 
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        if (userInfo) {
+            history.push('/shipping')
+        }else {
+            history.push('/login')
+        }
     }
 
     return (
