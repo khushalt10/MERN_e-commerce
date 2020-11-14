@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { saveShippingAddress } from '../actions/cartActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
+import { createOrder } from '../actions/orderActions'
 
-function PlaceOrderScreen() {
+function PlaceOrderScreen({history}) {
+    const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
 
     const addDecimals = (num) => {
@@ -18,8 +20,26 @@ function PlaceOrderScreen() {
     cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)))
     cart.totalPrice = addDecimals(Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice))
 
-    const placeOrderHandler = () => {
+    const orderCreate = useSelector(state => state.orderCreate)
+    const { order, success, error } = orderCreate
 
+    useEffect(() => {
+        if(success) {
+            history.push(`/order/${order._id}`)
+        }
+        // eslint-disable-next-line
+    },[history, success])
+
+    const placeOrderHandler = () => {
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress:cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            taxPrice: cart.taxPrice,
+            totalPrice: cart.totalPrice
+        }))
     }
 
     return (
@@ -101,7 +121,7 @@ function PlaceOrderScreen() {
                                     <Col>₹{cart.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
-
+                                {error && <Message variant="danger">{error}</Message>}
                             <ListGroup.Item>
                                 <Button type="button" className="btn-light btn-block" disbaled={cart.cartItems === 0} onClick={placeOrderHandler}>
                                     Place Order
