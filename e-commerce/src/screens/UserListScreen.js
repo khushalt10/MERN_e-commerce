@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listUsers } from '../actions/userActions'
+import { listUsers, deleteUser } from '../actions/userActions'
 
 function UserListScreen({history}) {
     const dispatch = useDispatch()
@@ -15,16 +15,21 @@ function UserListScreen({history}) {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    const userDelete = useSelector(state => state.userDelete)
+    const { success: successDelete } = userDelete
+
     useEffect(() => {
         if(userInfo && userInfo.isAdmin) {
             dispatch(listUsers())
         } else {
             history.push('/login')
         }
-    },[dispatch, history])
+    },[dispatch, history, successDelete])
     
-    const deleteHandler = () => {
-
+    const deleteHandler = (id) => {
+        if (window.confirm('Are you sure?')) {
+            dispatch(deleteUser(id))
+        }
     }
 
     return (
@@ -48,7 +53,7 @@ function UserListScreen({history}) {
                                 <td>{user.name}</td>
                                 <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
                                 <td>
-                                    {user.isAdmin ? (<i className="fas fas-checked" style={{color: 'green'}}></i> ): (
+                                    {user.isAdmin ? (<i className="fas fa-check" style={{color: 'green'}}></i> ): (
                                         <i className="fas fa-times" style={{color: 'red'}}></i>
                                     )}
                                 </td>
