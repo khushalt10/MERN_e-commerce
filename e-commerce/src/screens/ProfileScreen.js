@@ -21,8 +21,8 @@ function ProfileScreen({location}) {
     const userDetails = useSelector(state => state.userDetails)
     const { loading, user, error} = userDetails
 
-    const userUpdate = useSelector(state => state.userUpdate)
-    const {success} = userUpdate
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const {success} = userUpdateProfile
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo} = userLogin
