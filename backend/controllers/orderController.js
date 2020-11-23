@@ -25,7 +25,7 @@ const addOrderItems = asyncHandler(async(req, res) => {
     }
 })
 
-const  getOrderById = asyncHandler(async(req, res) => {
+const getOrderById = asyncHandler(async(req, res) => {
     const order = await Order.findById(req.params.id).populate('user', 'name email')
 
     if (order) {
@@ -64,9 +64,15 @@ const getMyOrders = asyncHandler(async(req, res) => {
 })
 
 
+const getAllOrders = asyncHandler(async(req, res) => {
+    const orders = await Order.find({}).populate('user', 'id name')
+    res.json(orders)
+})
+
 export {
    addOrderItems,
    getOrderById,
    updateOrderToPaid,
-   getMyOrders
+   getMyOrders,
+   getAllOrders
 }
