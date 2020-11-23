@@ -1,0 +1,19 @@
+actions/
+   *All your redux actions.js files
+
+components/
+    *Reusable components like Header, Footer or Form
+
+Constants/
+    *All ActionTypes for Redux constants
+
+reducers/
+    *Redux reducers files
+
+Screens/
+    *Files which will contain reusable components
+    e.g: HomeScreen, MenuSceen
+
+App.js
+index.js
+Store.js
