@@ -40,6 +40,7 @@ function App() {
           <Route path="/register" component={RegisterScreen} />    
           <Route path="/product/:id" component={ProdiuctScreen} />
           <Route path="/cart/:id?" component={CartScreen} />
+          <Route path="/search/:keyword" component={HomeScreen} />
           <Route path="/" component={HomeScreen} exact /> 
         </Container>   
       </main>
