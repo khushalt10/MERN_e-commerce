@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { push } from 'connected-react-router';
+
 
 function LoginScreen({location}) {
     const [email, setEmail] = useState('')
