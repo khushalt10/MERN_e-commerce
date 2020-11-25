@@ -7,6 +7,7 @@ import { listProductDetails, createProductReview } from '../actions/productActio
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import Meta from '../components/Meta'
 
 
 function ProdiuctScreen({ match, history }) {
@@ -46,11 +47,13 @@ function ProdiuctScreen({ match, history }) {
 
     return (
         <>
+           
             <Link to='/' className="btn btn-light my-3">
                 Go Back
             </Link>
             {loading ? <Loader /> : error ? <Message variant="danger">{error}</Message> : (
             <>
+                <Meta title={product.name} />
                 <Row>
                     <Col md={6}>
                         <Image src={product.image} alt={product.name} fluid />
