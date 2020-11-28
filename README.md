@@ -1,4 +1,9 @@
 # MERN_e-commerce
+
+![](product.png)
+
+![](products.png)
+
 Getting Started with Create React App
 This project was bootstrapped with Create React App.
 
