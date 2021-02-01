@@ -1,5 +1,7 @@
 # MERN_e-commerce
 
+Checkout deployed website here https://mern-proshop36.herokuapp.com/
+
 ![](product.png)
 
 ![](products.png)
